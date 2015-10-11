@@ -11,7 +11,7 @@ class HuffmanTreeNode:
 class HuffmanTree:
     def __init__(self, array):
         self.heap = [(freq, HuffmanTreeNode(char, freq)) for char, freq in array]
-        self.buildTree(self.heap)
+        self.root = self.buildTree(self.heap)
 
     def buildTree(self, heap):
         # elem in heap is not HuffmanTreeNode, but (freq, HuffmanTreeNode)
@@ -24,10 +24,10 @@ class HuffmanTree:
             node.left = left
             node.right = right
             heapq.heappush(heap, (left.freq+right.freq, node))
+        return heapq.heappop(self.heap)[1]
 
     def printCodes(self):
-        root = heapq.heappop(self.heap)[1]
-        self.traverse(root, '')
+        self.traverse(self.root, '')
 
     def traverse(self, root, code):
         if root.left is not None:
